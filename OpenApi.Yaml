@@ -12,6 +12,8 @@ tags:
     description: customer operations
   - name: Items
     description: item operations
+  - name: Departments
+    description: department operations
   - name: Groups
     description: item group operations
   - name: Discounts
@@ -837,7 +839,7 @@ paths:
                 
   /customer/{customerId}:
     get:
-      summary: Get an item
+      summary: Get a customer
       tags:
         - Customers
       description: "Gets a customer."
@@ -908,7 +910,7 @@ paths:
                 detail: Too many requests were sent, please wait before sending more.
                 
     put:
-      summary: Edit an item
+      summary: Edit a customer
       tags:
         - Customers
       description: "Edits a customer."
@@ -2050,6 +2052,391 @@ paths:
                 title: Too many requests
                 status: 429
                 detail: Too many requests were sent, please wait before sending more.
+                  
+  # Departments
+  
+  /department:
+    post:
+      summary: Add an department
+      tags:
+        - Departments
+      description: "Creates a department."
+      operationId: createDepartment
+      requestBody:
+        description: Properties for creating a new department.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDepartment'
+        required: true
+      responses:
+        '201':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Department'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              example:
+                title: Bad Request
+                status: 400
+                detail: Provided request was malformed or invalid.
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              example:
+                title: Unauthorized
+                status: 401
+                detail: Provided request lacked authorization headers.
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              example:
+                title: Forbidden
+                status: 403
+                detail: You lack permissions to perform this action.
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              example:
+                title: Unprocessable Entity
+                status: 422
+                detail: Request body or parameters contained invalid data.
+        '429':
+          description: Rate Limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              example:
+                title: Too many requests
+                status: 429
+                detail: Too many requests were sent, please wait before sending more.
+
+    get:
+      summary: Gets all departments by category
+      tags:
+        - Departments
+      description: "Get all departments."
+      operationId: getDepartments
+      parameters:
+        - name: top
+          in: query
+          description: The number of departments to get
+          required: false
+          schema:
+            type: number
+        - name: skip
+          in: query
+          description: The number of departments to skip over
+          required: false
+          schema:
+            type: number
+        - name: categoryId
+          in: query
+          description: The id of the category to get
+          required: false
+          schema: 
+            type: string
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Departments'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              example:
+                title: Bad Request
+                status: 400
+                detail: Provided request was malformed or invalid.
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              example:
+                title: Unauthorized
+                status: 401
+                detail: Provided request lacked authorization headers.
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              example:
+                title: Forbidden
+                status: 403
+                detail: You lack permissions to perform this action.
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              example:
+                title: Not Found
+                status: 404
+                detail: Specified resource was not found.
+        '429':
+          description: Rate Limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              example:
+                title: Too many requests
+                status: 429
+                detail: Too many requests were sent, please wait before sending more.
+                
+  /department/{departmentId}:
+    get:
+      summary: Get a department
+      tags:
+        - Departments
+      description: "Gets a department."
+      operationId: getDepartment
+      parameters:
+        - name: departmentId
+          in: path
+          description: The id of the department to get
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Department'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              example:
+                title: Bad Request
+                status: 400
+                detail: Provided request body was malformed.
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              example:
+                title: Unauthorized
+                status: 401
+                detail: Provided request lacked authorization headers.
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              example:
+                title: Forbidden
+                status: 403
+                detail: You lack permissions to perform this action.
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              example:
+                title: Not Found
+                status: 404
+                detail: Specified resource was not found.
+        '429':
+          description: Rate Limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              example:
+                title: Too many requests
+                status: 429
+                detail: Too many requests were sent, please wait before sending more.
+                
+    put:
+      summary: Edit a department
+      tags:
+        - Departments
+      description: "Edits a department."
+      operationId: editDepartment
+      parameters:
+        - name: departmentId
+          in: path
+          description: The id of the department
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Properties for creating a new department.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDepartment'
+        required: true
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Department'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              example:
+                title: Bad Request
+                status: 400
+                detail: Provided request was malformed or invalid.
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              example:
+                title: Unauthorized
+                status: 401
+                detail: Provided request lacked authorization headers.
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              example:
+                title: Forbidden
+                status: 403
+                detail: You lack permissions to perform this action.
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              example:
+                title: Not Found
+                status: 404
+                detail: Specified resource was not found.
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              example:
+                title: Unprocessable Entity
+                status: 422
+                detail: Request body or parameters contained invalid data.
+        '429':
+          description: Rate Limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              example:
+                title: Too many requests
+                status: 429
+                detail: Too many requests were sent, please wait before sending more.
+      
+    delete:
+      summary: Remove a department
+      tags:
+        - Departments
+      description: "Deletes a department."
+      operationId: deleteDepartment
+      parameters:
+        - name: departmentId
+          in: path
+          description: The id of the department
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Deleted
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              example:
+                title: Bad Request
+                status: 400
+                detail: Provided request was malformed or invalid.
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              example:
+                title: Unauthorized
+                status: 401
+                detail: Provided request lacked authorization headers.
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              example:
+                title: Forbidden
+                status: 403
+                detail: You lack permissions to perform this action.
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              example:
+                title: Not Found
+                status: 404
+                detail: Specified resource was not found.
+        '429':
+          description: Rate Limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              example:
+                title: Too many requests
+                status: 429
+                detail: Too many requests were sent, please wait before sending more.
+                  
                   
   # Groups
   
@@ -4201,6 +4588,34 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/OrderItem'
+            
+    Department:
+      type: object
+      properties:
+        managerId:
+          type: string
+          nullable: false
+        name:
+          type: string
+          nullable: false
+        id:
+          type: string
+          nullable: false
+        
+    CreateDepartment:
+      type: object
+      properties:
+        managerId:
+          type: string
+          nullable: false
+        name:
+          type: string
+          nullable: false
+          
+    Departments:
+      type: array
+      items:
+        $ref: '#/components/schemas/Department'
           
     Order:
       type: object
