@@ -1281,26 +1281,26 @@ paths:
                 status: 429
                 detail: Too many requests were sent, please wait before sending more.
   
-  /customer/{customerId}/cupon:          
+  /customer/{customerId}/coupon:          
     post:
-      summary: Add a cupon for customer
+      summary: Add a coupon for customer
       tags:
         - Customers
-      description: "Creates a cupon."
-      operationId: createCupon
+      description: "Creates a coupon."
+      operationId: createCoupon
       parameters:
         - name: customerId
           in: path
-          description: The id of the cupon holder
+          description: The id of the coupon holder
           required: true
           schema:
             type: string
       requestBody:
-        description: Properties for creating a new cupon.
+        description: Properties for creating a new coupon.
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateCupon'
+              $ref: '#/components/schemas/CreateCoupon'
         required: true
       responses:
         '201':
@@ -1308,7 +1308,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Cupon'
+                $ref: '#/components/schemas/Coupon'
         '400':
           description: Bad Request
           content:
@@ -1361,15 +1361,15 @@ paths:
                 detail: Too many requests were sent, please wait before sending more.
                 
     get:
-      summary: Gets cupons of a customer
+      summary: Gets coupons of a customer
       tags:
         - Customers
-      description: "Gets cuponss."
-      operationId: getCupons
+      description: "Gets couponss."
+      operationId: getCoupons
       parameters:
         - name: customerId
           in: path
-          description: The id of the cupon holder
+          description: The id of the coupon holder
           required: true
           schema:
             type: string
@@ -1379,7 +1379,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Cupons'
+                $ref: '#/components/schemas/Coupons'
         '400':
           description: Bad Request
           content:
@@ -1431,23 +1431,23 @@ paths:
                 status: 429
                 detail: Too many requests were sent, please wait before sending more.
            
-  /customer/{customerId}/cupon/{cuponId}:
+  /customer/{customerId}/coupon/{couponId}:
     get:
-      summary: Get a cupon of a customer
+      summary: Get a coupon of a customer
       tags:
         - Customers
-      description: "Gets a cupon."
-      operationId: getCupon
+      description: "Gets a coupon."
+      operationId: getCoupon
       parameters:
         - name: customerId
           in: path
-          description: The id of the cupon holder
+          description: The id of the coupon holder
           required: true
           schema:
             type: string
-        - name: cuponId
+        - name: couponId
           in: path
-          description: The id of the cupon
+          description: The id of the coupon
           required: true
           schema:
             type: string
@@ -1457,7 +1457,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Cupon'
+                $ref: '#/components/schemas/Coupon'
         '400':
           description: Bad Request
           content:
@@ -1510,21 +1510,21 @@ paths:
                 detail: Too many requests were sent, please wait before sending more.
                 
     delete:
-      summary: Remove a cupon
+      summary: Remove a coupon
       tags:
         - Customers
-      description: "Deletes a cupon."
-      operationId: deleteCupon
+      description: "Deletes a coupon."
+      operationId: deleteCoupon
       parameters:
         - name: customerId
           in: path
-          description: The id of the cupon holder
+          description: The id of the coupon holder
           required: true
           schema:
             type: string
-        - name: cuponId
+        - name: couponId
           in: path
-          description: The id of the cupon
+          description: The id of the coupon
           required: true
           schema:
             type: string
@@ -3805,86 +3805,6 @@ paths:
                 title: Too many requests
                 status: 429
                 detail: Too many requests were sent, please wait before sending more.
-                
-    put:
-      summary: edit an order
-      tags:
-        - Orders
-      description: "Edits the information of an order."
-      operationId: editOrder
-      requestBody:
-        description: Specifications of the order.
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreateOrder'
-      responses:
-        '200':
-          description: Ok
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Order'
-        '400':
-          description: Bad Request
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ProblemDetails'
-              example:
-                title: Bad Request
-                status: 400
-                detail: Provided request body was malformed.
-        '401':
-          description: Unauthorized
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ProblemDetails'
-              example:
-                title: Unauthorized
-                status: 401
-                detail: Provided request lacked authorization headers.
-        '403':
-          description: Forbidden
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ProblemDetails'
-              example:
-                title: Forbidden
-                status: 403
-                detail: You lack permissions to perform this action.
-        '404':
-          description: Not Found
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ProblemDetails'
-              example:
-                title: Not Found
-                status: 404
-                detail: Specified resource was not found.
-        '422':
-          description: Unprocessable Entity
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ProblemDetails'
-              example:
-                title: Unprocessable Entity
-                status: 422
-                detail: Request body or parameters contained invalid data.
-        '429':
-          description: Rate Limited
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ProblemDetails'
-              example:
-                title: Too many requests
-                status: 429
-                detail: Too many requests were sent, please wait before sending more.
       
     get:
       summary: Gets orders
@@ -4011,6 +3931,94 @@ paths:
                 title: Not Found
                 status: 404
                 detail: Specified resource was not found.
+        '429':
+          description: Rate Limited
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              example:
+                title: Too many requests
+                status: 429
+                detail: Too many requests were sent, please wait before sending more.
+                
+                            
+    put:
+      summary: edit an order
+      tags:
+        - Orders
+      description: "Edits the information of an order."
+      operationId: editOrder
+      parameters:
+        - name: orderId
+          in: path
+          description: The id of the order
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Specifications of the order.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrder'
+      responses:
+        '200':
+          description: Ok
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              example:
+                title: Bad Request
+                status: 400
+                detail: Provided request body was malformed.
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              example:
+                title: Unauthorized
+                status: 401
+                detail: Provided request lacked authorization headers.
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              example:
+                title: Forbidden
+                status: 403
+                detail: You lack permissions to perform this action.
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              example:
+                title: Not Found
+                status: 404
+                detail: Specified resource was not found.
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+              example:
+                title: Unprocessable Entity
+                status: 422
+                detail: Request body or parameters contained invalid data.
         '429':
           description: Rate Limited
           content:
@@ -4326,7 +4334,7 @@ components:
           type: number
           nullable: false
             
-    CreateCupon:
+    CreateCoupon:
       type: object
       properties:
         customerId:
@@ -4339,7 +4347,7 @@ components:
           type: number
           nullable: false
           
-    Cupon:
+    Coupon:
       type: object
       properties:
         id:
@@ -4355,7 +4363,7 @@ components:
           type: number
           nullable: false
     
-    Cupons:
+    Coupons:
       type: array
       items:
         $ref: '#/components/schemas/Customer'
